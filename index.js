@@ -1,4 +1,5 @@
 require('dotenv').config();
+const bluebird = require('bluebird');
 const Telegraf = require('telegraf');
 const SocksProxyAgent = require('socks-proxy-agent');
 const debug = require('debug')('main');
@@ -42,9 +43,22 @@ bot.on('message', async ctx => {
 
 
 async function start() {
-  await connect();
-  bot.launch();
-  debug('bot started');
+  try {
+    await connect();
+    bot.launch();
+    debug('bot started');
+
+    const res = await bot.telegram.sendMessage(249377954, 'test message');
+
+    debug(res);
+    await bluebird.delay(1000);
+
+    const editRes = await bot.telegram.editMessageText(res.chat.id, res.message_id, undefined,'edited text!');
+
+    debug(editRes);
+  } catch (err) {
+    debug('error in start', err);
+  }
 }
 
 start();

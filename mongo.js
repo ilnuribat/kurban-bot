@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const debug = require('debug')('connect');
 
-const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/kurban';
+const mongoUri = process.env.MONGO_URI || 'mongodb://guov:guov@localhost:27017/kurban?authSource=admin';
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
